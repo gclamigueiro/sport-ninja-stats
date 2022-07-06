@@ -20,6 +20,7 @@ services:
       - php
       - redis
       - mysql
+      - phpmyadmin
     networks:
       - laravel
 
@@ -31,10 +32,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: sport_ninja_stats
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"    
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
@@ -57,13 +58,12 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:mysql
+    container_name: phpmyadmin    
     ports:
       - 9090:80
     environment:
-      MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USERNAME: "${DB_USERNAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       PMA_HOST: mysql
     networks:
       - laravel      
