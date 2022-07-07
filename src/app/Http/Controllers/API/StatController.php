@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Stat;
+use App\Jobs\ProcessStats;
 
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class StatController extends Controller
@@ -15,13 +18,20 @@ class StatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // if stat is sended the result will be sorted by the given stat
+        $stat = $request->query('stat', '');
+
+        $elements = DB::table('stats')
+        ->selectRaw('stats.player_id, stats.name, sum(stats.value) as value')
+        ->groupBy('stats.player_id','stats.name')
+        ->orderBy('stats.player_id', 'desc')->get();
+         return response()->json($elements);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store the stats
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -37,65 +47,14 @@ class StatController extends Controller
             return response()->json($validator->errors());       
         }
 
-       
         $player_id = $request->player_id;
         $stats = $request->stats;
 
-         // Let's assume we need to store the stats separately 
-        // to preserve in what date they were created.
+       /* ProcessStats::dispatch($player_id, $stats)
+        ->delay(now()->addMinutes(5));*/
+        ProcessStats::dispatchAfterResponse($player_id, $stats);
 
-        // modify player_id in every stat
-        for($i= 0; $i < count($stats); $i++){
-            $stats[$i]['player_id'] = $player_id;
-        }
-
-        Stat::insert($stats);
-
-        return response()->json('Stats stored successfully');
+        return response()->json('Stats stored successfully. The change will be reflected shortly.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Stat  $stat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Stat $stat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Stat  $stat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Stat $stat)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Stat  $stat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Stat $stat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Stat  $stat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Stat $stat)
-    {
-        //
-    }
 }
