@@ -27,4 +27,9 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts \
     && docker-php-ext-install redis
 
+
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+  && docker-php-ext-install \
+    pcntl
+
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

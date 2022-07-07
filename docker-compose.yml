@@ -123,4 +123,4 @@ services:
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - laravel
+      - laravel 

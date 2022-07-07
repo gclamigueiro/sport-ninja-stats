@@ -21,6 +21,17 @@ docker-compose run --rm artisan migrate
 
 docker-compose down 
 
+
+# Use horizon 
+
+ Horizon allows you to monitor key metrics of your queue system such as job throughput, runtime, and job failures
+
+https://laravel.com/docs/8.x/horizon
+
+docker-compose run --rm artisan horizon 
+
+http://localhost:8080/horizon/
+
 # To Test the application
 
 
@@ -38,6 +49,8 @@ docker-compose run --rm artisan config:clear
 docker-compose run --rm composer <command>
 example:
 docker-compose run --rm composer require predis/predis
+docker-compose run --rm composer dump-autoload
 
 
-
+## useful documentation
+https://stackoverflow.com/questions/54566977/laravel-horizon-throws-error-call-to-undefined-function-laravel-horizon-consol
