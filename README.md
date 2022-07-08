@@ -42,7 +42,7 @@ docker-compose run --rm artisan <command>
 example:
 
 docker-compose run --rm artisan make:job ProcessStats
-docker-compose run --rm artisan queue:work redis
+docker-compose run --rm artisan queue:work --verbose --tries=3 --timeout=90
 docker-compose run --rm artisan config:clear
 
 # to run composer command
@@ -51,6 +51,11 @@ example:
 docker-compose run --rm composer require predis/predis
 docker-compose run --rm composer dump-autoload
 
+
+# install frontend
+
+docker-compose run --rm npm install
+docker-compose run --rm npm run dev
 
 ## useful documentation
 https://stackoverflow.com/questions/54566977/laravel-horizon-throws-error-call-to-undefined-function-laravel-horizon-consol
