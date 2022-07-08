@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stat extends Model
+class Player extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name','value','player_id'
+        'id','stats'
     ];
 
-    public function player()
+
+    public function stats()
     {
-        return $this->belongsTo(Player::class);
+        return $this->hasMany(Stat::class);
     }
 
 }

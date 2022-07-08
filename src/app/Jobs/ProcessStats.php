@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Stat;
+use App\Models\Player;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -47,13 +47,20 @@ class ProcessStats implements ShouldQueue
      */
     public function handle()
     {
-        $player_id = $this->player_id;
+
+        $player = Player::firstOrCreate([
+            'id' => $request->player_id
+        ]);
+       
+       $player->stats()->createMany($request->stats);
+
+       /* $player_id = $this->player_id;
         $stats = $this->stats;
          // modify player_id in every stat
          for($i= 0; $i < count($stats); $i++){
             $stats[$i]['player_id'] = $player_id;
         }
 
-        Stat::insert($stats);
+        Stat::insert($stats);*/
     }
 }

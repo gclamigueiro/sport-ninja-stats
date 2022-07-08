@@ -13,5 +13,4 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::resource('stats', App\Http\Controllers\API\StatController::class);
+Route::resource('players', App\Http\Controllers\API\PlayerController::class);

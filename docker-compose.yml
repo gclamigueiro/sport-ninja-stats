@@ -21,6 +21,11 @@ services:
       - redis
       - mysql
       - phpmyadmin
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
     networks:
       - laravel
 
