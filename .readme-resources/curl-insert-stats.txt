@@ -1,0 +1,23 @@
+curl --location --request POST 'http://localhost:8080/api/players/stats' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "player_id": 255,
+    "stats": [
+        {
+            "name": "goals",
+            "value": 12
+        },
+        {
+            "name": "shots",
+            "value": 8
+        },
+        {
+            "name": "penalties",
+            "value": 3
+        },
+        {
+            "name": "games",
+            "value": 10
+        }
+    ]
+}'

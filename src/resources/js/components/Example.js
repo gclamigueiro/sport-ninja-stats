@@ -1,17 +1,30 @@
 import ReactDOM from 'react-dom';
-
 import { useState } from 'react';
 
+import './Example.css';
 import { save, get } from '../services/player_stats';
 
 function Example() {
 
     const [amount, setAmount] = useState(10);
-    // const [times, setTimes] = useState([]);
+    const [times, setTimes] = useState([]);
+
+    const [orderBy, setOrderBy] = useState('goals');
+    const [stats, setStats] = useState({});
+    const executeSaveStats = (player_id, stats, start) => {
+        save(player_id, stats).then(() => {
+           const time = performance.now() - start;
+            setTimes(prevData => 
+                 [...prevData, { duration: time/1000, player_id: player_id }]
+              )
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 
     const generateStats = () => {
 
-        const promises = [];
+        setTimes([]);
 
         for (let i = 0; i < amount; i++) {
 
@@ -39,35 +52,54 @@ function Example() {
                     value: Math.floor(Math.random() * 100)
                 }
             ]
-
-            promises.push(save(player_id, stats));
+            let start = performance.now();
+            executeSaveStats(player_id, stats, start);
         }
 
-        Promise.all(promises)
+    }
 
+    const getStats = () => {
+        get(orderBy).then(stats => {
+            setStats(stats.data);
+        }).catch(err => {
+            console.log(err);
+        }
+        );
     }
 
     return (
         <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <h3 className="card-header">Generate Stats</h3>
-                        <label>Number of petitions</label>
-                        <input
-                            value={amount}
-                            onChange={(evt) => setAmount(evt.target.value)}
-                        ></input>
+            <div className="col-6">
+                <div className="card">
+                    <h3 className="card-header">Generate Stats</h3>
+                    <label>Number of petitions</label>
+                    <input
+                        value={amount}
+                        onChange={(evt) => setAmount(evt.target.value)}
+                    ></input>
 
-                        <button onClick={generateStats} >Send</button>
+                    <button onClick={generateStats} >Send</button>
 
-                    </div>
                 </div>
-               {/* <div>
+                {<div>
                     {times.map((time, index) => {
-                        return <p>{(index + 1) + " - player_id:" + time.player_id  + " - " + time.duration + ' seconds'} </p>
+                        return <p key={index}>{(index + 1) + " - player_id:" + time.player_id + " - " + time.duration + ' seconds'} </p>
                     })}
-                </div> */}
+                </div>}
+            </div>
+            <div className="col-6">
+                <div className="card">
+                    <h3 className="card-header">Get Stats</h3>
+                    <label>Order By</label>
+                    <input
+                        value={orderBy}
+                        onChange={(evt) => setOrderBy(evt.target.value)}
+                    ></input>
+                    <button onClick={getStats} >Send</button>
+                </div>
+                <pre>
+                    {stats && JSON.stringify(stats, null, 2)}
+                </pre>
             </div>
         </div>
     );
