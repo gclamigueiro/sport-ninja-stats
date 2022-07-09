@@ -52,7 +52,6 @@ http://localhost:8080/horizon/
 # to run artisan command
 
 docker-compose run --rm artisan <command>
-
 example:
 
 docker-compose run --rm artisan make:job ProcessStats
@@ -73,3 +72,7 @@ docker-compose run --rm npm run dev
 
 ## useful documentation
 https://stackoverflow.com/questions/54566977/laravel-horizon-throws-error-call-to-undefined-function-laravel-horizon-consol
+
+## See Redis keys
+- Enter into the redis container
+- Execute ```redis-cli``` and ```KEYS *```

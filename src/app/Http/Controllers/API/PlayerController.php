@@ -87,7 +87,11 @@ class PlayerController extends Controller
 
         $player_id = $request->player_id;
         $stats = $request->stats;
-       
+
+        // If new stats are stored, it is necessary clear the cache
+        $keys_to_delete = Redis::keys('stats*');
+        Redis::del($keys_to_delete);
+
         // Sending the proccess to the queue
         ProcessStats::dispatchAfterResponse($player_id, $stats); 
 

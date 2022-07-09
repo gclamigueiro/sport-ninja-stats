@@ -13,4 +13,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::resource('players', App\Http\Controllers\API\PlayerController::class);
+// Route::resource('players', App\Http\Controllers\API\PlayerController::class);
+
+Route::get(
+    'players',
+    [App\Http\Controllers\API\PlayerController::class, 'index']
+)->name('palyers.index')->middleware('cache.stats');
+
+Route::post(
+    'players',
+    [App\Http\Controllers\API\PlayerController::class, 'store']
+)->name('palyers.store');
