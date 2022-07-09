@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 
 import { useState } from 'react';
 
-import { save, get } from '../services/stats';
+import { save, get } from '../services/player_stats';
 
 function Example() {
 

@@ -139,7 +139,6 @@ return [
             'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', '6379'),
-            //database set to 0 since only database 0 is supported in redis cluster
             'database' => '0',
             //redis key prefix for this connection
             'prefix' => 'q:',

@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 // Route::resource('players', App\Http\Controllers\API\PlayerController::class);
 
 Route::get(
-    'players',
+    'players/stats',
     [App\Http\Controllers\API\PlayerController::class, 'index']
 )->name('palyers.index')->middleware('cache.stats');
 
 Route::post(
-    'players',
+    'players/stats',
     [App\Http\Controllers\API\PlayerController::class, 'store']
 )->name('palyers.store');

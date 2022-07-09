@@ -14,8 +14,8 @@
 
 ### Updates made over the template
 - PhpMyAdmin container added
-- Library ```pcntl``` installed in php. Required by Horizon
-- Add volumen to mysql, to persist data
+- Library ```pcntl``` installed in php. Required by Laravel Horizon.
+- Add volume to mysql, to persist data
 
 ### Containers deployed and ports
 - nginx - :8080
@@ -25,12 +25,11 @@
 - phpmyadmin -: 9090
 
 ## To run the application
-- Rename ```.env.example``` to ```.env``` in src.
-- Run docker compose Up command with the command below  
+- Rename ```.env.example``` to ```.env``` in src folder.
+- Run docker compose up command with the command below  
     ```docker-compose --env-file ./src/.env up -d --build site```
 - Run migrations  
     ```docker-compose run --rm artisan migrate```
-
 
 ## To stop the application
 - Execute docker compose down command  
@@ -40,38 +39,41 @@
 
 ## Use Laravel Horizon 
 
- Horizon allows you to monitor key metrics of your queue system such as job throughput, runtime, and job failures
+ Laravel Horizon allows to monitor key metrics of your queue system such as job throughput, runtime, and job failures. (Horizon Documentation)<https://laravel.com/docs/8.x/horizon> 
 
-https://laravel.com/docs/8.x/horizon
+### Execute Horizon
 
-docker-compose run --rm artisan horizon 
+```docker-compose run --rm artisan horizon```
 
-http://localhost:8080/horizon/
+Url <http://localhost:8080/horizon/>
 
 
-# to run artisan command
+## Usefuel commands
 
-docker-compose run --rm artisan <command>
+### Run artisan commands
+
+```docker-compose run --rm artisan <command>```   
+
+examples:  
+
+- ```docker-compose run --rm artisan make:job ProcessInvalidateCache```
+- ```docker-compose run --rm artisan queue:work```
+- ```docker-compose run --rm artisan config:clear```
+
+### Run composer commands
+```docker-compose run --rm composer make:resource <command>```
 example:
+- ```docker-compose run --rm composer require predis/predis```
+- ```docker-compose run --rm composer dump-autoload```
 
-docker-compose run --rm artisan make:job ProcessStats
-docker-compose run --rm artisan queue:work --verbose --tries=3 --timeout=90
-docker-compose run --rm artisan config:clear
+# Use the frontend to test the endpoints
 
-# to run composer command
-docker-compose run --rm composer make:resource UserCollection
-example:
-docker-compose run --rm composer require predis/predis
-docker-compose run --rm composer dump-autoload
+In case the page does not load correctly, it would be neccesary to compile the js assets again. For this, run the following commands:
 
+```docker-compose run --rm npm install```
+```docker-compose run --rm npm run dev```
 
-# install frontend
-
-docker-compose run --rm npm install
-docker-compose run --rm npm run dev
-
-## useful documentation
-https://stackoverflow.com/questions/54566977/laravel-horizon-throws-error-call-to-undefined-function-laravel-horizon-consol
+Enter to <http://localhost:8080/>
 
 ## See Redis keys
 - Enter into the redis container

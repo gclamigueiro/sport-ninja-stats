@@ -30,10 +30,6 @@ return [
 
     'connections' => [
 
-        'sync' => [
-            'driver' => 'sync',
-        ],
-
         'database' => [
             'driver' => 'database',
             'table' => 'jobs',

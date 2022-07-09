@@ -5326,7 +5326,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _services_stats__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/stats */ "./resources/js/services/stats.js");
+/* harmony import */ var _services_player_stats__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player_stats */ "./resources/js/services/player_stats.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5350,12 +5350,8 @@ function Example() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(10),
       _useState2 = _slicedToArray(_useState, 2),
       amount = _useState2[0],
-      setAmount = _useState2[1];
+      setAmount = _useState2[1]; // const [times, setTimes] = useState([]);
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      times = _useState4[0],
-      setTimes = _useState4[1];
 
   var generateStats = function generateStats() {
     var promises = [];
@@ -5378,7 +5374,7 @@ function Example() {
         name: "shots",
         value: Math.floor(Math.random() * 100)
       }];
-      promises.push((0,_services_stats__WEBPACK_IMPORTED_MODULE_2__.save)(player_id, stats));
+      promises.push((0,_services_player_stats__WEBPACK_IMPORTED_MODULE_2__.save)(player_id, stats));
     }
 
     Promise.all(promises);
@@ -5386,9 +5382,9 @@ function Example() {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "row justify-content-center",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "col-md-8",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "card",
@@ -5407,13 +5403,7 @@ function Example() {
             children: "Send"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        children: times.map(function (time, index) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("p", {
-            children: [index + 1 + " - player_id:" + time.player_id + " - " + time.duration + ' seconds', " "]
-          });
-        })
-      })]
+      })
     })
   });
 }
@@ -5426,10 +5416,10 @@ if (document.getElementById('root')) {
 
 /***/ }),
 
-/***/ "./resources/js/services/stats.js":
-/*!****************************************!*\
-  !*** ./resources/js/services/stats.js ***!
-  \****************************************/
+/***/ "./resources/js/services/player_stats.js":
+/*!***********************************************!*\
+  !*** ./resources/js/services/player_stats.js ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5442,13 +5432,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var save = function save(player_id, stats) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/stats', {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/players', {
     player_id: player_id,
     stats: stats
   });
 };
 var get = function get(order_by_stat) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/stats' + (order_by_stat ? "?stat=".concat(order_by_stat) : ''));
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/players' + (order_by_stat ? "?stat=".concat(order_by_stat) : ''));
 };
 
 /***/ }),

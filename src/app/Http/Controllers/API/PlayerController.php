@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Player;
 use App\Models\Stat;
 use App\Jobs\ProcessStats;
+use App\Jobs\ProcessInvalidateCache;
 use App\Http\Resources\PlayerCollection;
 
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -28,7 +28,7 @@ class PlayerController extends Controller
         // The idea of this query is to get first the 
         // rows of the given stat and then the player_id ordered correctly
         // and then with a Inner Join Bring the others stats
-        // In this way is not neccesary to sort in memory the result
+        // In this way is not neccesary to sort in memory the result saving time
         // DRAWBACK 1: If the stat do not exist the result will be empty, 
         //             A solution could be check if the stat exist in the DB
         //             or if the result is empty execute the other query
@@ -88,9 +88,7 @@ class PlayerController extends Controller
         $player_id = $request->player_id;
         $stats = $request->stats;
 
-        // If new stats are stored, it is necessary clear the cache
-        $keys_to_delete = Redis::keys('stats*');
-        Redis::del($keys_to_delete);
+        ProcessInvalidateCache::dispatchAfterResponse(); 
 
         // Sending the proccess to the queue
         ProcessStats::dispatchAfterResponse($player_id, $stats); 
