@@ -15,16 +15,11 @@ use Illuminate\Support\Facades\Redis;
  * This job is used to invalidate the cache.
  * It is unique because the idea is do not invalidate the cache in every petition
  */
-class ProcessInvalidateCache implements ShouldQueue, ShouldBeUnique
+class ProcessInvalidateCache implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     
-    public function uniqueId()
-    {
-        return 'invalidate-cache';
-    }
-
     public function middleware()
     {
     return [(new RateLimitedWithRedis('cache'))->dontRelease()];

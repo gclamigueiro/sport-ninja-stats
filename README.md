@@ -33,7 +33,7 @@
       - StatsCacheMiddleware: Use in get method to save an retrieve from redis cache.
     - Post Method (`/players/stats`): Store the stats. Use redis Queue to handle a large amount of petitions and repond faster to the client. Use the following processes:
       - ProcessStats: It is where stats are saved.
-      - ProcessInvalidateCache: A proccess called at most 2 times a minute when new stats are saved to invalidate the cache data.
+      - ProcessInvalidateCache: A proccess called at most 2 times a minute when new stats are saved to invalidate the cache data (maybe would be better doing after a certain time if new stats were inserted and also dispatch the proccess after the stats proccess is finished).
 ## Template utilized to set up docker composer
 
  <https://github.com/aschmelyun/docker-compose-laravel>

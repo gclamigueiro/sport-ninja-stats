@@ -29,25 +29,33 @@ class PlayerController extends Controller
         // rows of the given stat and then the player_id ordered correctly
         // and then with a Inner Join Bring the others stats
         // In this way is not neccesary to sort in memory the result
+        // UPDATE was neccesary to include another query to recover the player
+        // that does not have the required stat. The drawback is that a subquery was used to achieve that
         // DRAWBACK 1: If the stat do not exist the result will be empty, 
         //             A solution could be check if the stat exist in the DB
         //             or if the result is empty execute the other query
-        // DRAWBACK 2: If a player does not have the stat, he will not be included in the result 
-        //             It is necessary to include a condition for this case     
-
         $players = DB::select(
-            "select s.*
-            from (select player_id, name, SUM(value) as total
-                        from stats
-                           WHERE name = '$stat'
-                        GROUP BY player_id, name
-                        ORDER BY total DESC, player_id DESC
-            ) as x INNER JOIN 
-            (
-            select player_id, name, SUM(value) as total
-                        from stats
-                           GROUP BY player_id, name
-            ) as s ON x.player_id =  s.player_id
+            "
+            SELECT s.*
+                FROM (
+                    (SELECT player_id, name, SUM(value) as total
+                    FROM stats
+                    WHERE name = '$stat'
+                    GROUP BY player_id, name
+                    )
+                UNION   /*This second query is to check for the players that does not have the required stat*/
+                    (SELECT player_id, '' as name, 0 as total
+                    FROM stats s1                          
+                    WHERE NOT EXISTS( SELECT 1 from stats s2 WHERE s2.player_id = s1.player_id AND name = '$stat')
+                    GROUP BY player_id
+                    )
+                ORDER BY total DESC, player_id DESC
+                ) as x LEFT JOIN 
+                (
+                SELECT player_id, name, SUM(value) as total
+                FROM stats
+                GROUP BY player_id, name
+                ) as s ON x.player_id =  s.player_id
              ");
 
             }else{
@@ -89,8 +97,8 @@ class PlayerController extends Controller
         $stats = $request->stats;
 
         // sending the proccesses to the queue
-        ProcessStats::dispatch($player_id, $stats); 
         ProcessInvalidateCache::dispatch(); 
+        ProcessStats::dispatch($player_id, $stats); 
 
         return response()->json('Stats stored successfully. The change will be reflected shortly.');
     }
