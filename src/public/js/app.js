@@ -5382,7 +5382,7 @@ function Example() {
       var time = performance.now() - start;
       setTimes(function (prevData) {
         return [].concat(_toConsumableArray(prevData), [{
-          duration: time / 100,
+          duration: time / 1000,
           player_id: player_id
         }]);
       });
