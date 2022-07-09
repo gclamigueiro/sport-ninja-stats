@@ -29,7 +29,7 @@
 - Run docker compose up command with the command below  
     ```docker-compose --env-file ./src/.env up -d --build site```
 - Run migrations  
-    ```docker-compose run --rm artisan migrate```
+    ```docker-compose run --rm artisan migrate --seed```
 
 ## To stop the application
 - Execute docker compose down command  
@@ -57,11 +57,11 @@ Url <http://localhost:8080/horizon/>
 examples:  
 
 - ```docker-compose run --rm artisan make:job ProcessInvalidateCache```
-- ```docker-compose run --rm artisan queue:work```
+- ```docker-compose run --rm artisan queue:restart```
 - ```docker-compose run --rm artisan config:clear```
 
 ### Run composer commands
-```docker-compose run --rm composer make:resource <command>```
+```docker-compose run --rm composer <command>```
 example:
 - ```docker-compose run --rm composer require predis/predis```
 - ```docker-compose run --rm composer dump-autoload```

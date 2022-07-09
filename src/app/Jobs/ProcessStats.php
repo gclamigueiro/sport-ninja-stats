@@ -49,18 +49,31 @@ class ProcessStats implements ShouldQueue
     {
 
         $player = Player::firstOrCreate([
-            'id' => $request->player_id
-        ]);
-       
-       $player->stats()->createMany($request->stats);
-
-       /* $player_id = $this->player_id;
-        $stats = $this->stats;
-         // modify player_id in every stat
-         for($i= 0; $i < count($stats); $i++){
-            $stats[$i]['player_id'] = $player_id;
-        }
-
-        Stat::insert($stats);*/
+            'id' => $this->player_id
+          ]);
+    
+          //DB::connection()->enableQueryLog();
+         
+          // It is preferable to use the insert method instead of the createMany method
+          // because the insert method will execute only one query instead one by stat like
+          // the createMany.
+          // In case is known that in a single petition a great number of stats will be sended
+          // then it will be necessary to use some chunk technique to create batchs. 
+    
+          $now = \Carbon\Carbon::now()->toDateTimeString();
+          $stats = $this->stats;
+          for($i= 0; $i < count($stats); $i++){
+            $el = $stats[$i];
+            $el['player_id'] = $this->player_id;
+            $el['created_at'] = $now;
+            $el['updated_at'] = $now;
+            $stats[$i] = $el;
+           }
+    
+           $player->stats()->insert($stats);
+    
+           // $queries =  $player->stats()->createMany($stats);
+           // $queries = DB::getQueryLog();
+           // dd($queries);
     }
 }

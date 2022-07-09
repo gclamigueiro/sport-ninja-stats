@@ -12,7 +12,7 @@ use Illuminate\Queue\Middleware\RateLimitedWithRedis;
 use Illuminate\Support\Facades\Redis;
 
 /**
- * This job is used to invalidate the cache for a given key.
+ * This job is used to invalidate the cache.
  * It is unique because the idea is do not invalidate the cache in every petition
  */
 class ProcessInvalidateCache implements ShouldQueue, ShouldBeUnique
@@ -49,6 +49,8 @@ class ProcessInvalidateCache implements ShouldQueue, ShouldBeUnique
     {
         // If new stats are stored, it is necessary clear the cache
         $keys_to_delete = Redis::keys('stats*');
-        Redis::del($keys_to_delete);
+        foreach ($keys_to_delete as $key) {
+            Redis::del($key);
+        } 
     }
 }

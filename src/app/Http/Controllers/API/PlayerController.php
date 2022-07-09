@@ -28,7 +28,7 @@ class PlayerController extends Controller
         // The idea of this query is to get first the 
         // rows of the given stat and then the player_id ordered correctly
         // and then with a Inner Join Bring the others stats
-        // In this way is not neccesary to sort in memory the result saving time
+        // In this way is not neccesary to sort in memory the result
         // DRAWBACK 1: If the stat do not exist the result will be empty, 
         //             A solution could be check if the stat exist in the DB
         //             or if the result is empty execute the other query
@@ -88,10 +88,9 @@ class PlayerController extends Controller
         $player_id = $request->player_id;
         $stats = $request->stats;
 
-        ProcessInvalidateCache::dispatchAfterResponse(); 
-
-        // Sending the proccess to the queue
-        ProcessStats::dispatchAfterResponse($player_id, $stats); 
+        // sending the proccesses to the queue
+        ProcessStats::dispatch($player_id, $stats); 
+        ProcessInvalidateCache::dispatch(); 
 
         return response()->json('Stats stored successfully. The change will be reflected shortly.');
     }

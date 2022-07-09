@@ -5432,13 +5432,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var save = function save(player_id, stats) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/players', {
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/players/stats', {
     player_id: player_id,
     stats: stats
   });
 };
 var get = function get(order_by_stat) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/players' + (order_by_stat ? "?stat=".concat(order_by_stat) : ''));
+  return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/players/stats' + (order_by_stat ? "?stat=".concat(order_by_stat) : ''));
 };
 
 /***/ }),
