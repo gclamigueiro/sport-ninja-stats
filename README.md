@@ -11,9 +11,9 @@
 - Docker Compose
 ## To run the application
 - Rename ```.env.example``` to ```.env``` in src folder.
-- Run docker compose up command with the command below:
+- Run docker compose up command with the command below:  
     ```docker-compose --env-file ./src/.env up -d --build site```
-- Install dependencies:
+- Install dependencies:  
     ```docker-compose run --rm composer update```    
 - Run migrations:  
     ```docker-compose run --rm artisan migrate --seed```
@@ -55,7 +55,7 @@
 
  Laravel Horizon allows to monitor key metrics of your queue system such as job throughput, runtime, and job failures. [Horizon Documentation](https://laravel.com/docs/8.x/horizon)
 
-![Horizon Completed Jobs](.readme-resources/horizon-completed-jobs.png)
+![Horizon Completed Jobs](./.readme-resources/horizon-completed-jobs.png)
 
 ### Run Horizon
 Execute command:  
