@@ -63,7 +63,7 @@
 ## Laravel Horizon 
 Laravel Horizon allows you to monitor key metrics of your queue system such as job throughput, runtime, and job failures. [Horizon Documentation](https://laravel.com/docs/8.x/horizon)
 
-![Horizon Completed Jobs Example](https://raw.githubusercontent.com/gclamigueiro/sport-ninja-stats/master/.readme-resources/horizon-completed-jobs.PNG)
+![Horizon Completed Jobs Example](.readme-resources/horizon-completed-jobs.PNG)
 
 ### Run Horizon
 Execute command:  
