@@ -57,8 +57,8 @@ class ProcessStats implements ShouldQueue
           // It is preferable to use the insert method instead of the createMany method
           // because the insert method will execute only one query instead one by stat like
           // the createMany.
-          // In case is known that in a single petition a great number of stats will be sended
-          // then it will be necessary to use some chunk technique to create batchs. 
+          // In case is known that in a single petition a great number of stats will be sent
+          // then it will be necessary to use some chunk technique to create batches. 
     
           $now = \Carbon\Carbon::now()->toDateTimeString();
           $stats = $this->stats;

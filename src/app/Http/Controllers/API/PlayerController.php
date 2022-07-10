@@ -20,19 +20,19 @@ class PlayerController extends Controller
       $stat = $request->query('stat', '');
       
        /***
-         *  If a stat is sended the result will be sorted by the given stat DESC
+         *  If a stat is sent the result will be sorted by the given stat DESC
          *  and BY player_id DESC
          */
       if($stat != ''){   
 
         // The idea of this query is to get first the 
         // rows of the given stat and then the player_id ordered correctly
-        // and then with a Inner Join Bring the others stats
-        // In this way is not neccesary to sort in memory the result
-        // UPDATE was neccesary to include another query to recover the player
+        // and then with an Inner Join Bring the other's stats
+        // In this way is not necessary to sort in memory the result
+        // UPDATE was necessary to include another query to recover the player
         // that does not have the required stat. The drawback is that a subquery was used to achieve that
-        // DRAWBACK 1: If the stat do not exist the result will be empty, 
-        //             A solution could be check if the stat exist in the DB
+        // DRAWBACK 1: If the stat does not exist the result will be empty, 
+        //             A solution could be to check if the stat exists in the DB
         //             or if the result is empty execute the other query
         $players = DB::select(
             "
@@ -59,16 +59,12 @@ class PlayerController extends Controller
              ");
 
             }else{
-               // DB::connection()->enableQueryLog();
-                
                 $players = DB::table('stats')->select(
                     'stats.player_id',
                     'stats.name',
                     DB::raw('SUM(stats.value) as total')
                 )->groupBy('stats.player_id','stats.name')->get();
-
-                // $queries = DB::getQueryLog();
-                // dd($queries);
+              
             }
 
             $collection = collect($players)->groupBy('player_id');

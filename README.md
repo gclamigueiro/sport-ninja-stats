@@ -23,7 +23,7 @@
     ```docker-compose run --rm artisan queue:work``` 
     
 ## To stop the application
-- Execute docker compose down command: 
+- Execute docker compose down command:  
     ```docker-compose down```
     
 ## Test the application
@@ -65,7 +65,7 @@
 ## Laravel Horizon 
 Laravel Horizon allows you to monitor key metrics of your queue system such as job throughput, runtime, and job failures. [Horizon Documentation](https://laravel.com/docs/8.x/horizon)
 
-![Horizon Completed Jobs Example](.readme-resources/horizon-completed-jobs.png)
+![Horizon Completed Jobs Example](.readme-resources/horizon-completed-jobs.PNG)
 
 ### Run Horizon
 Execute command:  
