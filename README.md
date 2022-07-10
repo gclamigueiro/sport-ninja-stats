@@ -30,7 +30,9 @@
 - You can use the following Curls:
   - Insert Stats ->  [Download Curl](./.readme-resources/curl-insert-stats.txt)
   - Get Stats ->  [Download Curl](./.readme-resources/curl-get-stats.txt)
-- You can go to <http://localhost:8080> and generate and recover stats. 
+- You can go to <http://localhost:8080> and generate and recover stats. Example: 
+
+![Example Frontend](.readme-resources/example-frontend.png)
 
 ## Description of the solution
 - Models Created
@@ -63,7 +65,7 @@
 ## Laravel Horizon 
 Laravel Horizon allows you to monitor key metrics of your queue system such as job throughput, runtime, and job failures. [Horizon Documentation](https://laravel.com/docs/8.x/horizon)
 
-![Horizon Completed Jobs Example](.readme-resources/horizon-completed-jobs.PNG)
+![Horizon Completed Jobs Example](.readme-resources/horizon-completed-jobs.png)
 
 ### Run Horizon
 Execute command:  

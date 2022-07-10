@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Ninja Sport Stats</title>
+        <title>Sport Ninja Stats</title>
 
         <!-- Include Frontend Application (webpack mix) -->
         <script defer src="/js/manifest.js"></script>

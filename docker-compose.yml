@@ -21,11 +21,6 @@ services:
       - redis
       - mysql
       - phpmyadmin
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 256M
     networks:
       - laravel
 
@@ -58,11 +53,6 @@ services:
     container_name: php
     volumes:
       - ./src:/var/www/html:delegated
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 256M      
     networks:
       - laravel
 
